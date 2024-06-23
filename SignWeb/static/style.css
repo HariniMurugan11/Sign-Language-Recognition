@@ -1,0 +1,48 @@
+/* Navigation bar styles */
+body{
+background-image: linear-gradient(#e66465, #9198e5);
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: linear-gradient(#e66465, #9198e5);
+    padding: 10px;
+    color: #fff;
+}
+
+/* Help button styles */
+.help-button {
+    background-color: #ff5733;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Title and description styles */
+.title {
+    color:white;
+    text-align: center;
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Webcam and gesture display styles */
+#webcam {
+    display: block;
+    margin: 0 auto;
+}
+
+#gesture {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+/* Background animation */
+body {
+    background-image: linear-gradient(#e66465, #9198e5);
+    background-size: cover;
+}

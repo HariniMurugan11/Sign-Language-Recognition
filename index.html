@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <video id="webcam" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="64" height="64" style="display:none;"></canvas>
+    <h2>Predicted Gesture: <span id="gesture"></span></h2>
+
+    <script>
+        const webcamElement = document.getElementById('webcam');
+        const canvasElement = document.getElementById('canvas');
+        const gestureElement = document.getElementById('gesture');
+
+        async function setupWebcam() {
+            const stream = await navigator.mediaDevices.getUserMedia({ 'video': true });
+            webcamElement.srcObject = stream;
+
+            setInterval(async () => {
+                captureFrameAndPredict();
+            }, 1000);  // Capture every 1 second
+        }
+
+        async function captureFrameAndPredict() {
+            const context = canvasElement.getContext('2d');
+            context.drawImage(webcamElement, 0, 0, 64, 64);
+            const dataUrl = canvasElement.toDataURL('image/jpeg');
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: JSON.stringify({
+                    image: dataUrl
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const result = await response.json();
+            gestureElement.textContent = result.gesture;
+        }
+
+        setupWebcam();
+    </script>
+</body>
+</html>
